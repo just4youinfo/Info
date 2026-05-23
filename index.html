@@ -78,7 +78,7 @@
         .card {
             position: relative;
             z-index: 10;
-            max-width: 580px;
+            max-width: 620px;
             width: 100%;
             background: #fef7e8;
             background-image: radial-gradient(circle at 10% 20%, rgba(110, 70, 35, 0.03) 2%, transparent 2.5%),
@@ -112,9 +112,28 @@
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.75rem 0;
             line-height: 1.2;
             text-align: center;
+        }
+
+        /* Logo styling: mooi centreren, passend formaat, zachte schaduw en responsive */
+        .logo-wrapper {
+            text-align: center;
+            margin: 0.5rem 0 1.2rem 0;
+        }
+
+        .logo-image {
+            max-width: 240px;
+            width: 70%;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            border-radius: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.02);
         }
 
         /* tekstblok met de gecentreerde boodschap */
@@ -232,7 +251,7 @@
             text-decoration: underline;
         }
 
-        /* Nieuwe stijl voor de beursinformatie - uitgebreide tekst */
+        /* beursinformatie - uitgebreide tekst */
         .visit-info {
             margin-top: 2rem;
             text-align: center;
@@ -294,28 +313,6 @@
             background: linear-gradient(90deg, transparent, #d4a373, #b97f48, #d4a373, transparent);
         }
 
-        /* knop styling */
-        .cta-wood {
-            background: #a76e3c;
-            border: none;
-            color: white;
-            padding: 0.7rem 1.6rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-top: 0.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: inset 0 1px 0 rgba(255,215,150,0.6), 0 3px 8px rgba(0,0,0,0.2);
-            font-family: inherit;
-        }
-
-        .cta-wood:hover {
-            background: #8b5a2e;
-            transform: scale(0.98);
-            box-shadow: inset 0 1px 1px rgba(0,0,0,0.1), 0 2px 5px rgba(0,0,0,0.2);
-        }
-
         .wood-knot {
             position: absolute;
             bottom: 15px;
@@ -373,7 +370,11 @@
             }
             h1 {
                 font-size: 1.9rem;
-                margin-bottom: 1rem;
+                margin-bottom: 0.6rem;
+            }
+            .logo-image {
+                max-width: 180px;
+                width: 65%;
             }
             .creativity-text {
                 font-size: 0.92rem;
@@ -406,6 +407,13 @@
                 font-size: 0.88rem;
             }
         }
+
+        /* Extra kleine schermen */
+        @media (max-width: 420px) {
+            .logo-image {
+                max-width: 150px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -417,6 +425,11 @@
     <div class="wood-border-top"></div>
     <div class="inner-padding">
         <h1>Een cadeau vol creativiteit</h1>
+        
+        <!-- LOGO: onder de hoofdtitel, passend formaat, afgeronde hoeken, zachte schaduw -->
+        <div class="logo-wrapper">
+            <img class="logo-image" src="https://i.imgur.com/WtexOUv.png" alt="Just4You logo - creatief geschenk met ziel" loading="lazy">
+        </div>
         
         <!-- Gecentreerd tekstblok -->
         <div class="creativity-text">
@@ -433,7 +446,7 @@
             <div class="info-title">Info of vragen:</div>
         </div>
 
-        <!-- CONTACTGEGEVENS: ALLEEN E-MAIL en TELEFOON -->
+        <!-- CONTACTGEGEVENS: ALLEEN E-MAIL en TELEFOON (geen extra knop) -->
         <div class="contact-grid">
             <!-- e-mail -->
             <div class="contact-item">
@@ -457,12 +470,9 @@
             </div>
         </div>
 
-        <div class="flex-center">
-            <button class="cta-wood" id="contactKnop">✨ Stuur een berichtje ✨</button>
-        </div>
         <hr />
         
-        <!-- Nieuwe sectie: beursinformatie zoals gevraagd -->
+        <!-- beursinformatie sectie -->
         <div class="flex-center">
             <div class="visit-info">
                 <div class="visit-title">✨ Kom ons zeker bezoeken ✨</div>
@@ -480,49 +490,6 @@
         </footer>
     </div>
 </div>
-
-<script>
-    const contactBtn = document.getElementById('contactKnop');
-    if (contactBtn) {
-        contactBtn.addEventListener('click', () => {
-            const userChoice = confirm("📬 Hoe wil je contact opnemen?\n\nOK → E-mail openen\nAnnuleren → Telefoonnummer tonen");
-            if (userChoice) {
-                window.location.href = "mailto:just4you@proximus.be?subject=Creatief%20cadeau%20-%20vraag&body=Hallo,%20ik%20heb%20een%20idee/vraag%20over%20een%20persoonlijk%20cadeau...";
-            } else {
-                const telLink = document.createElement('div');
-                telLink.style.position = 'fixed';
-                telLink.style.bottom = '20px';
-                telLink.style.left = '50%';
-                telLink.style.transform = 'translateX(-50%)';
-                telLink.style.backgroundColor = '#2e241b';
-                telLink.style.color = '#ffecce';
-                telLink.style.padding = '12px 24px';
-                telLink.style.borderRadius = '50px';
-                telLink.style.fontFamily = 'monospace';
-                telLink.style.fontWeight = 'bold';
-                telLink.style.zIndex = '1000';
-                telLink.style.boxShadow = '0 6px 18px black';
-                telLink.style.backdropFilter = 'blur(8px)';
-                telLink.style.fontSize = '1rem';
-                telLink.style.cursor = 'pointer';
-                telLink.style.border = '1px solid #d69448';
-                telLink.innerHTML = '📞 0478 91 11 65 — klik om te bellen 📞';
-                document.body.appendChild(telLink);
-                telLink.addEventListener('click', () => {
-                    window.location.href = 'tel:+32478911165';
-                });
-                setTimeout(() => {
-                    telLink.style.transition = 'opacity 0.4s';
-                    telLink.style.opacity = '0';
-                    setTimeout(() => {
-                        if(telLink && telLink.remove) telLink.remove();
-                    }, 500);
-                }, 5000);
-            }
-        });
-    }
-    console.log("Just4You | Beursinformatie toegevoegd: 25 mei, Ambachtsmarkt Heusden, Destelbergen, 8u-13u.");
-</script>
 
 </body>
 </html>
