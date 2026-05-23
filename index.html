@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Coming Soon | Bewegende Kleuren</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0a0c12;
+      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ---------- ANIMATIEVE KLEUREN BACKGROUND ---------- */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 80, 120, 0.3), rgba(30, 40, 80, 0.8));
+    }
+
+    /* bewegende gradient overlay - vloeibare kleuren */
+    .moving-colors {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(
+        125deg,
+        #ff3366,
+        #ff6b3d,
+        #ffd93d,
+        #6bcb77,
+        #4d96ff,
+        #a45ee5,
+        #ff3366
+      );
+      background-size: 400% 400%;
+      animation: liquidMove 18s ease infinite;
+      filter: blur(110px);
+      opacity: 0.65;
+      transform: scale(1.2);
+    }
+
+    @keyframes liquidMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      25% {
+        background-position: 50% 30%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      75% {
+        background-position: 50% 70%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* tweede extra bewegende laag voor diepte */
+    .moving-colors-2 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(ellipse at 40% 60%, rgba(255, 100, 150, 0.7), rgba(80, 200, 255, 0.3));
+      background-blend-mode: overlay;
+      animation: driftPulse 14s infinite alternate;
+      opacity: 0.5;
+      filter: blur(70px);
+    }
+
+    @keyframes driftPulse {
+      0% {
+        transform: scale(1) translate(0%, 0%);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(1.4) translate(5%, 8%);
+        opacity: 0.7;
+      }
+    }
+
+    /* HOOFD CARD - modern glas effect */
+    .glass-card {
+      background: rgba(15, 25, 45, 0.55);
+      backdrop-filter: blur(16px);
+      border-radius: 3rem;
+      padding: 2.8rem 3rem;
+      max-width: 750px;
+      width: 90%;
+      margin: 2rem;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .glass-card:hover {
+      transform: scale(1.01);
+      backdrop-filter: blur(20px);
+    }
+
+    /* hoofd titel met dynamische kleurshift */
+    .title {
+      font-size: clamp(2.8rem, 12vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF, #FFD6E8, #B8F2FF, #FFB347);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textChroma 8s ease infinite;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    @keyframes textChroma {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .sub {
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      word-spacing: 4px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+    }
+
+    .separator {
+      width: 90px;
+      height: 3px;
+      background: linear-gradient(90deg, #ff8a5c, #ff4d6d, #c77dff);
+      margin: 0.6rem auto 1.5rem auto;
+      border-radius: 10px;
+      animation: widthPulse 2s infinite alternate;
+    }
+
+    @keyframes widthPulse {
+      0% { width: 60px; opacity: 0.6; }
+      100% { width: 130px; opacity: 1; }
+    }
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #f0f3fa;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      display: inline-block;
+      padding: 0.5rem 1.4rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* timer / countdown stijl */
+    .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 2rem;
+    }
+
+    .time-block {
+      background: rgba(10, 20, 35, 0.65);
+      backdrop-filter: blur(8px);
+      border-radius: 1.8rem;
+      padding: 1rem 0.7rem;
+      min-width: 85px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .time-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      font-family: monospace;
+      background: linear-gradient(145deg, #fff, #ffe6b3);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 3px;
+    }
+
+    .time-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: #ccddf8;
+      margin-top: 6px;
+    }
+
+    /* notificatie form */
+    .notify-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .email-input {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.9rem 1.5rem;
+      border-radius: 60px;
+      font-size: 1rem;
+      width: 260px;
+      outline: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+      backdrop-filter: blur(5px);
+    }
+
+    .email-input::placeholder {
+      color: #ddddff;
+      font-weight: 400;
+    }
+
+    .email-input:focus {
+      border-color: #ffaa77;
+      background: rgba(0,0,0,0.4);
+      box-shadow: 0 0 12px rgba(255,160,100,0.5);
+    }
+
+    .btn-glow {
+      background: linear-gradient(95deg, #ff5e6e, #ff9966);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-glow:hover {
+      transform: scale(1.02);
+      background: linear-gradient(95deg, #ff3b4e, #ff7a3f);
+      box-shadow: 0 8px 25px rgba(255,80,60,0.6);
+    }
+
+    .success-msg {
+      margin-top: 1rem;
+      background: rgba(0, 30, 10, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 0.6rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      color: #b0ffc0;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    /* social icons */
+    .social-links {
+      margin-top: 2.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .social-icon {
+      color: rgba(255,255,245,0.85);
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: 0.2s;
+      backdrop-filter: blur(4px);
+      background: rgba(255,255,255,0.1);
+      width: 45px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-5px);
+      background: rgba(255,100,100,0.7);
+      color: white;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+
+    /* kleine animerende bolletjes voor extra beweging (optioneel) */
+    .floating-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .dot {
+      position: absolute;
+      background: radial-gradient(circle, rgba(255,255,200,0.8), rgba(255,100,100,0));
+      border-radius: 50%;
+      filter: blur(2px);
+      animation: floatRandom 12s infinite alternate ease-in-out;
+      opacity: 0.4;
+    }
+
+    @keyframes floatRandom {
+      0% {
+        transform: translateY(0px) translateX(0px) scale(1);
+      }
+      100% {
+        transform: translateY(-40px) translateX(20px) scale(1.2);
+      }
+    }
+
+    footer {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1.8rem;
+      color: rgba(230, 230, 255, 0.6);
+    }
+
+    @media (max-width: 550px) {
+      .glass-card {
+        padding: 2rem 1.2rem;
+      }
+      .time-block {
+        min-width: 65px;
+        padding: 0.6rem 0.2rem;
+      }
+      .time-number {
+        font-size: 1.8rem;
+      }
+      .notify-form {
+        flex-direction: column;
+        align-items: center;
+      }
+      .email-input {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- vaste dynamische beweging kleurenlagen -->
+  <div class="animated-bg"></div>
+  <div class="moving-colors"></div>
+  <div class="moving-colors-2"></div>
+
+  <!-- zwevende decoratieve dots -->
+  <div class="floating-dots" id="floatingDots"></div>
+
+  <!-- hoofdcard inhoud -->
+  <div class="glass-card">
+    <h1 class="title">COMING SOON</h1>
+    <div class="separator"></div>
+    <div class="sub">een splinternieuw experience</div>
+    <p class="description">
+      🌈 Kleurrijke beleving met bewegende chroma vibes. <br>
+      Wij zijn in de laatste fase. Mis de lancering niet!
+    </p>
+
+    <!-- Countdown timer (live tot 31 december 2025 23:59:59, maar wordt elke seconde geteld) -->
+    <div class="countdown-wrapper" id="countdown">
+      <div class="time-block">
+        <div class="time-number" id="days">00</div>
+        <div class="time-label">Dagen</div>
+      </div>
+      <div class="time-block">
+        <div class="time-number" id="hours">00</div>
+        <div class="time-label">Uren</div>
+      </div>
+      <div class="time-block">
+        <div class="time-number" id="minutes">00</div>
+        <div class="time-label">Minuten</div>
+      </div>
+      <div class="time-block">
+        <div class="time-number" id="seconds">00</div>
+        <div class="time-label">Seconden</div>
+      </div>
+    </div>
+
+    <!-- notificatie formulier -->
+    <form id="notifyForm" class="notify-form">
+      <input type="email" class="email-input" id="emailInput" placeholder="Jouw e-mailadres" required>
+      <button type="submit" class="btn-glow">🔔 Stuur me een seintje</button>
+    </form>
+    <div id="formFeedback" style="min-height: 50px;"></div>
+
+    <!-- social media icoontjes (pure sfeer) -->
+    <div class="social-links">
+      <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+      <a href="#" class="social-icon" aria-label="Twitter">🐦</a>
+      <a href="#" class="social-icon" aria-label="Discord">💬</a>
+      <a href="#" class="social-icon" aria-label="GitHub">⌨️</a>
+    </div>
+    <footer>✨ bewegende kleuren • innovatie in aantocht</footer>
+  </div>
+
+  <script>
+    (function() {
+      // --- DYNAMISCHE VLOEIBARE KLEUREN (al in CSS) plus extra floating dots genereren ---
+      function createFloatingDots() {
+        const container = document.getElementById('floatingDots');
+        if (!container) return;
+        const dotCount = 32;
+        for (let i = 0; i < dotCount; i++) {
+          const dot = document.createElement('div');
+          dot.classList.add('dot');
+          const size = Math.floor(Math.random() * 40 + 15);
+          dot.style.width = size + 'px';
+          dot.style.height = size + 'px';
+          dot.style.left = Math.random() * 100 + '%';
+          dot.style.top = Math.random() * 100 + '%';
+          dot.style.animationDuration = Math.random() * 15 + 8 + 's';
+          dot.style.animationDelay = Math.random() * 5 + 's';
+          dot.style.background = `radial-gradient(circle, rgba(${150 + Math.random() * 105}, ${100 + Math.random() * 155}, 220, 0.6), rgba(255,80,120,0.05))`;
+          dot.style.filter = 'blur(6px)';
+          container.appendChild(dot);
+        }
+      }
+
+      // --- COUNTDOWN LOGICA (lancering 1 januari 2026 00:00:00, maar leuk tijdelijk venster) ---
+      // Stel doeldatum in op 1 januari 2026, 00:00:00 lokale tijd? Of UTC+1? Maakt visueel niet uit, gewoon dynamisch.
+      // Gebruik een specifieke datum: 31 december 2025 23:59:59 (of 1 januari 2026 00:00:00). Voor 'coming soon' sfeer.
+      // Kies: 1 januari 2026, 00:00:00 (Midnight)
+      const targetDate = new Date(2026, 0, 1, 0, 0, 0, 0); // 1 Jan 2026 00:00:00
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const targetTime = targetDate.getTime();
+        let distance = targetTime - now;
+
+        if (distance < 0) {
+          // als de datum voorbij is, toon 'gelanceerd!' of vrolijke boodschap
+          document.getElementById('days').innerText = '00';
+          document.getElementById('hours').innerText = '00';
+          document.getElementById('minutes').innerText = '00';
+          document.getElementById('seconds').innerText = '00';
+          const wrapper = document.querySelector('.countdown-wrapper');
+          if (wrapper && !document.getElementById('launchMessage')) {
+            const launchedDiv = document.createElement('div');
+            launchedDiv.id = 'launchMessage';
+            launchedDiv.style.marginTop = '12px';
+            launchedDiv.style.fontWeight = 'bold';
+            launchedDiv.style.background = '#a0f0b0aa';
+            launchedDiv.style.padding = '0.5rem';
+            launchedDiv.style.borderRadius = '40px';
+            launchedDiv.style.color = '#113311';
+            launchedDiv.innerText = '🚀 We zijn gelanceerd! Welkom in de nieuwe wereld! 🎉';
+            wrapper.parentNode.insertBefore(launchedDiv, wrapper.nextSibling);
+          }
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+        document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+      }
+
+      // init countdown + interval
+      updateCountdown();
+      const intervalCountdown = setInterval(updateCountdown, 1000);
+
+      // --- FORMULIER AFHANDELING (geen echte backend, demonstratie met mooie melding)---
+      const form = document.getElementById('notifyForm');
+      const feedbackDiv = document.getElementById('formFeedback');
+      const emailInput = document.getElementById('emailInput');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        if (!email) {
+          showFeedback('📧 Voer een geldig e-mailadres in.', '#ffb3ba');
+          return;
+        }
+        if (!email.includes('@') || !email.includes('.')) {
+          showFeedback('⚠️ Gebruik een correct e-mailadres (bijv. naam@domein.nl).', '#ffcc99');
+          return;
+        }
+        // Simuleer succesvolle aanmelding (demo)
+        showFeedback(`✅ Geweldig! ${email} wordt als eerste op de hoogte gebracht. 🌟`, '#baffe0');
+        emailInput.value = '';
+        // extra speels effect : kleine glitter
+        const btn = form.querySelector('button');
+        btn.style.transform = 'scale(0.98)';
+        setTimeout(() => { btn.style.transform = ''; }, 150);
+      });
+
+      function showFeedback(message, bgHint) {
+        feedbackDiv.innerHTML = `<div class="success-msg" style="background: rgba(0,0,0,0.6); border-left: 5px solid #ffa07a;">${message}</div>`;
+        setTimeout(() => {
+          const msgDiv = feedbackDiv.querySelector('.success-msg');
+          if (msgDiv) msgDiv.style.opacity = '0';
+          setTimeout(() => {
+            if (feedbackDiv.firstChild) feedbackDiv.innerHTML = '';
+          }, 500);
+        }, 3200);
+      }
+
+      // extra effect: live chroma update voor extra 'bewegende kleuren' op de kaartrand via JS - alleen decoratief
+      // we kunnen de gradient van de separator of titel dynamisch laten bewegen via interval? CSS heeft al animatie, dus optioneel.
+      // Voeg nog een subtiele muisbeweging reflectie toe op de glas card (licht volgen)
+      const card = document.querySelector('.glass-card');
+      if (card) {
+        document.addEventListener('mousemove', (e) => {
+          const x = (e.clientX / window.innerWidth) * 100;
+          const y = (e.clientY / window.innerHeight) * 100;
+          card.style.borderImage = `radial-gradient(circle at ${x}% ${y}%, rgba(255,220,150,0.4), rgba(255,80,120,0.1)) 1`;
+          card.style.borderImageSlice = '1';
+          card.style.border = '1px solid transparent';
+        });
+        // reset een klein beetje bij mouseleave
+        card.addEventListener('mouseleave', () => {
+          card.style.borderImage = '';
+          card.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+        });
+      }
+
+      // extra levendigheid: verander snelheid van background animatie random? niet nodig, maar leuk om kleuren nog sneller te laten 'pulsen' op klik?
+      // optioneel: klik op titel geeft extra kleurenflits
+      const titleElem = document.querySelector('.title');
+      if (titleElem) {
+        titleElem.addEventListener('click', () => {
+          const overlay = document.querySelector('.moving-colors');
+          if (overlay) {
+            overlay.style.animationDuration = '5s';
+            setTimeout(() => {
+              overlay.style.animationDuration = '18s';
+            }, 1000);
+          }
+          // tijdelijke extra gloed
+          card.style.boxShadow = '0 0 0 3px rgba(255,200,100,0.6), 0 20px 40px black';
+          setTimeout(() => { card.style.boxShadow = ''; }, 400);
+        });
+      }
+
+      // random floating dots genereren
+      createFloatingDots();
+
+      // extra: refresh timer niet overlappen en geheugen netjes houden
+      window.addEventListener('beforeunload', () => {
+        if (intervalCountdown) clearInterval(intervalCountdown);
+      });
+    })();
+  </script>
+</body>
+</html>
